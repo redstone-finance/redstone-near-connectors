@@ -1,0 +1,13 @@
+[package]
+name = "redstone-near-connector-rs"
+version = "0.0.1"
+edition = "2021"
+description = "RedStone Near Connector"
+license-file = "LICENSE"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bitmaps = "3.2.0"
+near-sdk = {version = "4.1.0-pre.0", features=["unstable"] }
