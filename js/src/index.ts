@@ -207,7 +207,7 @@ const extractDataPackage = (
   return extractionResult;
 };
 
-export const getOracleValue = (oracleReq: OracleRequestParams): bigint => {
+const getOracleValue = (oracleReq: OracleRequestParams): bigint => {
   const { redstonePayload } = oracleReq;
 
   // Checking unsigned metadata with redstone marker
@@ -260,3 +260,5 @@ export const getOracleValue = (oracleReq: OracleRequestParams): bigint => {
 
   return getMedianValue(values);
 };
+
+export { getOracleValue };
