@@ -1,7 +1,7 @@
 {
   "name": "redstone-near-connector-js",
   "version": "0.0.5",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && tsc -build",
