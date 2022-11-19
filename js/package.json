@@ -22,7 +22,5 @@
     "src/**/*",
     "package.json"
   ],
-  "dependencies": {
-    "near-sdk-js": "^0.6.0"
-  }
+  "dependencies": {}
 }

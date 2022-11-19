@@ -41,6 +41,8 @@ describe("Integration", () => {
       dataFeedId: BTC_BYTES_32_HEX,
       redstonePayload: fromHexString(REDSTONE_PAYLOAD_HEX_STR),
       uniqueSignersThreshold: 2,
+      ecrecover: () => "hehe",
+      keccak256: () => "hehe",
     });
 
     console.log({ oracleValue });

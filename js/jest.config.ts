@@ -6,7 +6,6 @@ const config: Config.InitialOptions = {
   transform: {
     "^.+\\.(ts|js)$": "ts-jest",
   },
-  transformIgnorePatterns: ["near-sdk-js"],
   testEnvironment: "node",
 };
 
