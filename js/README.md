@@ -80,11 +80,11 @@ class YourContract {
 
 ### 2. Adjust your frontend code
 
-You probably noticed, that in the first step your smart contract function requires an additional String argument (`redstone_payload`). You can get it in your front-end or your tests code using [redstone-sdk](https://www.npmjs.com/package/redstone-sdk).
+You probably noticed, that in the first step your smart contract function requires an additional Uint8Array argument (`redstone_payload`). You can get it in your front-end or your tests code using [redstone-sdk](https://www.npmjs.com/package/redstone-sdk).
 
 #### Installation
 
-Firstly, install it in your frontgend JS or TS project
+Firstly, install it in your frontend JS or TS project
 
 ```sh
 # Using NPM
@@ -144,16 +144,18 @@ You can check out a simple example NEAR dApp powered by RedStone oracles [here.]
 Source code ([src](./src/) folder):
 
 - [index.ts](./src/index.ts) - entrypoint file
-- [core.ts](./src/core.ts) - main redstone logic - payload parsing, signature verification
+- [core.ts](./src/core.ts) - main redstone payload parsing logic
 - [assert.ts](./src/assert.ts) - assertion function
 - [bytes.ts](./src/bytes.ts) - bytes utilities for conversion between different bytes representations
 - [math.ts](./src/math.ts) - implementation of the `getMedianValue` function
 
 Tests are located in the [test](./test/) folder.
 
-### To run tests with output printing
+### To run tests
 
-`yarn test`
+```sh
+yarn test
+```
 
 ## 🙋‍♂️ Contact
 

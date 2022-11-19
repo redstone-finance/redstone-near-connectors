@@ -84,7 +84,7 @@ You probably noticed, that in the first step your smart contract function requir
 
 #### Installation
 
-Firstly, install it in your frontgend JS or TS project
+Firstly, install it in your frontend JS or TS project
 
 ```sh
 # Using NPM
