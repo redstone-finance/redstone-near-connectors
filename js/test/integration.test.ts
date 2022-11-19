@@ -1,5 +1,10 @@
 import { getOracleValue } from "../src";
-import { fromHexString } from "../src/bytes";
+import {
+  asciiToBytes,
+  bytesToAscii,
+  fromHexString,
+  toHexString,
+} from "../src/bytes";
 
 const REDSTONE_PAYLOAD_HEX_STR =
   "4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003d1e382100045544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e90edd00001812f2590c000000020000002c1296a449f5d353c8b04eb389f33a583ee79449cca6e366900042f19f2521e722a410929223231905839c00865af68738f1a202478d87dc33675ea5824f343901b4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003d1e382100045544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e90edd00001812f2590c000000020000002dbbf8a0e6b1c9a56a4a0ef7089ef2a3f74fbd21fbd5c7c8192b70084004b4f6d37427507c4fff835f74fd4d000b6830ed296e207f49831b96f90a4f4e60820ee1c0002312e312e3223746573742d646174612d66656564000014000002ed57011e0000";
@@ -33,6 +38,30 @@ const TEST_TIMESTAMP_MILLISECONDS = 1654353400000;
 //   "000014" + // unsigned metadata byte size (20 in hex)
 //   "000002ed57011e0000" // RedStone marker
 
+const uint8ArrayToAscii = (bytes: Uint8Array): string => {
+  const byteArrValues = [];
+  for (let i = 0; i < bytes.length; i++) {
+    byteArrValues.push(bytes[i]);
+  }
+  return String.fromCharCode(...byteArrValues);
+};
+
+const mockKeccak256 = (msg: string) => {
+  return "mock-hash-of: " + msg;
+};
+
+const mockEcrecover = (
+  _msgHash: string,
+  signatureWithoutVByte: string
+): string => {
+  const signatureHex = toHexString(asciiToBytes(signatureWithoutVByte));
+  if (signatureHex.startsWith("dbbf8a0e6b1c9a56a4a0")) {
+    return uint8ArrayToAscii(fromHexString(SIGNER_1_PUB_KEY_HEX));
+  } else {
+    return uint8ArrayToAscii(fromHexString(SIGNER_2_PUB_KEY_HEX));
+  }
+};
+
 describe("Integration", () => {
   test("Should properly get oracle value", async () => {
     const oracleValue = getOracleValue({
@@ -41,10 +70,10 @@ describe("Integration", () => {
       dataFeedId: BTC_BYTES_32_HEX,
       redstonePayload: fromHexString(REDSTONE_PAYLOAD_HEX_STR),
       uniqueSignersThreshold: 2,
-      ecrecover: () => "hehe",
-      keccak256: () => "hehe",
+      ecrecover: mockEcrecover,
+      keccak256: mockKeccak256,
     });
 
-    console.log({ oracleValue });
+    expect(oracleValue).toBe(BigInt(4200000000000));
   });
 });
