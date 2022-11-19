@@ -1,6 +1,6 @@
 [package]
 name = "redstone-near-connector-rs"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 description = "RedStone Near Connector"
 license-file = "LICENSE"
