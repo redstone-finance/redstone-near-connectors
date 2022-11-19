@@ -11,12 +11,16 @@ RedStone is a data ecosystem that delivers frequently updated, reliable and dive
 
 It uses a radically different way of putting oracle data on-chain:
 
-- RedStone data providers need to sign provided data, but don't need to push the data on-chain. It allows them to provide way more data with the significantly higher update frequency
-- RedStone leverages the decentralized [Streamr](https://streamr.network/) pub-sub network to deliver signed oracle data from providers to the end users
-- End users can self-deliver signed Oracle data on-chain
-- On-chain Smart Contracts verify the data integrity using cryptographic signatures and timestamps
-- RedStone uses token incentives to motivate data providers to maintain data integrity and uninterrupted service
-- Additionally, RedStone leverages the Arweave blockchain as a cheap and permanent storage for archiving Oracle data and maintaining data providers' accountability
+- RedStone data providers need to sign provided data and broadcast it using the decentralized [Streamr](https://streamr.network/) pub-sub network. Providers **don't need to push the data on-chain**, which allows them to provide way **more types of data** with significantly **higher update frequency**
+- End users can receive signed oracle data from the Streamr network and self-deliver it on-chain, attaching it to their transactions
+- On-chain Smart Contracts can verify the data integrity using cryptographic signatures and timestamps
+
+Additionally, RedStone:
+
+- Uses token incentives to motivate data providers to maintain data integrity and uninterrupted service
+- Leverages [Arweave blockchain](https://www.arweave.org/) as a cheap and permanent decentralized storage for archiving Oracle data and maintaining data providers' accountability
+
+To learn more about RedStone oracles design check out the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## 🔗 Near blockchain
 
@@ -25,6 +29,8 @@ NEAR is a user-friendly and carbon-neutral blockchain, built from the ground up 
 In technical terms, NEAR is a layer one, sharded, proof-of-stake blockchain built with usability in mind.
 
 In simple terms, NEAR is **blockchain for everyone**.
+
+To learn more about the NEAR blockchain checkout out [official NEAR documentation](https://docs.near.org/)
 
 ## 🚀 Getting started
 
