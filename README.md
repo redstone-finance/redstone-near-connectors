@@ -46,6 +46,10 @@ This repository contains implementations of near connectors for both **Typescrip
 - **redstone-near-connector-rs** - [`rust` folder](./rust/)
 - **redstone-near-connector-js** - [`js` folder](./js/)
 
+## 💡 Examples
+- [redstone-near-dapp-example-js](https://github.com/redstone-finance/redstone-near-dapp-example-js)
+- [redstone-near-dapp-example-rust](https://github.com/redstone-finance/redstone-near-dapp-example-rust)
+
 ## 🙋‍♂️ Contact
 
 Please feel free to contact RedStone team on [Discord](https://redstone.finance/discord) or send email to core@redstone.finance
