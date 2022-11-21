@@ -34,6 +34,21 @@ Now you can use the `getOracleValue` function in your smart contract code in the
 import { NearBindgen, near, call, view } from "near-sdk-js";
 import { getOracleValue } from "redstone-near-connector-js";
 
+// Trusted public keys can be found here: https://github.com/redstone-finance/redstone-oracles-monorepo/blob/main/packages/oracles-smartweave-contracts/src/contracts/redstone-oracle-registry/initial-state.json
+const REDSTONE_MAIN_DEMO_SIGNER_PUB_KEY_HEX =
+  "009dd87eb41d96ce8ad94aa22ea8b0ba4ac20c45e42f71726d6b180f93c3f298e333ae7591fe1c9d88234575639be9e81e35ba2fe5ad2c2260f07db49ccb9d0d";
+
+function getDataFeedIdForSymbol(symbol: string): string {
+  const symbolToDataFeedId = {
+    NEAR: "4e45415200000000000000000000000000000000000000000000000000000000",
+    BTC: "4254430000000000000000000000000000000000000000000000000000000000",
+    ETH: "4554480000000000000000000000000000000000000000000000000000000000",
+    TSLA: "54534c4100000000000000000000000000000000000000000000000000000000",
+    EUR: "4555520000000000000000000000000000000000000000000000000000000000",
+  };
+  return symbolToDataFeedId[symbol];
+}
+
 @NearBindgen({})
 class YourContract {
 
@@ -45,17 +60,16 @@ class YourContract {
     ...
 
     // 32 bytes identifier of the data feed (hex)
-    const dataFeedId = "4254430000000000000000000000000000000000000000000000000000000000";
+    const dataFeedId = getDataFeedIdForSymbol(symbol);
 
     // Required min number of unique signers for the requested data feed
-    const uniqueSignersThreshold = 2;
+    const uniqueSignersThreshold = 1;
 
     // Array, containing public keys (hex) of trusted signers
-    // Trusted public keys can be found here: https://github.com/redstone-finance/redstone-oracles-monorepo/blob/main/packages/oracles-smartweave-contracts/src/contracts/redstone-oracle-registry/initial-state.json
-    const authorisedSigners = [SIGNER_1_PUB_KEY_HEX, SIGNER_2_PUB_KEY_HEX];
+    const authorisedSigners = [REDSTONE_MAIN_DEMO_SIGNER_PUB_KEY_HEX];
 
     // Block timestamp milliseconds
-    const currentTimestampMilliseconds = near.blockTimestamp() / 1_000_000;
+    const currentTimestampMilliseconds = Number(near.blockTimestamp() / BigInt(1_000_000));
 
     // `getOracleValue` function will:
     // - parse redstone payload,
@@ -63,7 +77,7 @@ class YourContract {
     // - verify each signature,
     // - count unique signers for the requested data feed,
     // - after passing all checks, return the aggregated median value
-    const oracleValue = getOracleValue({
+    const oracleValue =  getOracleValue({
       dataFeedId,
       uniqueSignersThreshold,
       authorisedSigners,
@@ -84,14 +98,14 @@ You probably noticed, that in the first step your smart contract function requir
 
 #### Installation
 
-Firstly, install it in your frontend JS or TS project
+Firstly, install redstone-sdk and ethers in your frontend JS or TS project
 
 ```sh
 # Using NPM
-npm install redstone-sdk
+npm install redstone-sdk ethers
 
 # Or using yarn
-yarn add redstone-sdk
+yarn add redstone-sdk ethers
 ```
 
 #### Usage
@@ -100,6 +114,7 @@ Then you can request the redstone payload in the following way:
 
 ```js
 import redstoneSDK from "redstone-sdk";
+import { arrayify } from "ethers/lib/utils";
 
 const redstoneDataGateways = [
   "https://cache-service-direct-1.b.redstone.finance",
@@ -109,7 +124,7 @@ const redstoneDataGateways = [
 const redstonePayloadHex = await redstoneSDK.requestRedstonePayload(
   {
     dataServiceId: "redstone-main-demo",
-    uniqueSignersCount: 2,
+    uniqueSignersCount: 1,
     dataFeeds: ["BTC"],
   },
   redstoneDataGateways
@@ -124,7 +139,7 @@ const outcome = await wallet.signAndSendTransaction({
       params: {
         methodName: "your_contract_method",
         args: {
-          redstone_payload: redstonePayloadHex,
+          redstone_payload: Object.values(arrayify(`0x${redstonePayload}`)),
         },
         ...
       },
@@ -135,7 +150,7 @@ const outcome = await wallet.signAndSendTransaction({
 
 ## 🔥 Examples
 
-You can check out a simple example NEAR dApp powered by RedStone oracles [here.](https://github.com/redstone-finance/synths-on-near-js)
+You can check out a simple example NEAR dApp powered by RedStone oracles [here.](https://github.com/redstone-finance/redstone-near-dapp-example-js)
 
 ## 👩🏻‍💻 Development and contributions
 

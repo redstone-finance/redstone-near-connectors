@@ -20,7 +20,7 @@ Additionally, RedStone:
 - Uses token incentives to motivate data providers to maintain data integrity and uninterrupted service
 - Leverages [Arweave blockchain](https://www.arweave.org/) as a cheap and permanent decentralized storage for archiving Oracle data and maintaining data providers' accountability
 
-To learn more about RedStone oracles design check out the [RedStone docs](https://docs.redstone.finance/docs/introduction)
+To learn more about RedStone oracles design check out the [RedStone docs.](https://docs.redstone.finance/docs/introduction)
 
 ## 🔗 Near blockchain
 
@@ -30,7 +30,7 @@ In technical terms, NEAR is a layer one, sharded, proof-of-stake blockchain buil
 
 In simple terms, NEAR is **blockchain for everyone**.
 
-To learn more about the NEAR blockchain checkout out [official NEAR documentation](https://docs.near.org/)
+To learn more about the NEAR blockchain checkout out the [official NEAR documentation.](https://docs.near.org/)
 
 ## 🚀 Getting started
 

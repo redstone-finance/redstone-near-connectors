@@ -30,6 +30,17 @@ Now you can use the `get_oracle_value` function in your smart contract code in t
 use near_sdk::{log, near_bindgen};
 use redstone_near_connector_rs::{get_oracle_value, decode_hex};
 
+const BTC_BYTES_32_HEX_STR: &str =
+    "4254430000000000000000000000000000000000000000000000000000000000";
+
+const REDSTONE_MAIN_DEMO_SIGNER_PUB_KEY_HEX: &str =
+  "009dd87eb41d96ce8ad94aa22ea8b0ba4ac20c45e42f71726d6b180f93c3f298e333ae7591fe1c9d88234575639be9e81e35ba2fe5ad2c2260f07db49ccb9d0d";
+
+fn get_pub_key(hex_pub_key: &str) -> [u8; 64] {
+  let pub_key_vec = decode_hex(hex_pub_key).unwrap();
+  pub_key_vec.try_into().unwrap()
+}
+
 #[near_bindgen]
 pub struct YourContract {
   ...
@@ -43,20 +54,21 @@ impl YourContract {
     ...
 
     // 32 bytes identifier of the data feed
-    let data_feed_id: [u8; 32] = decode_hex("4254430000000000000000000000000000000000000000000000000000000000");
+    let data_feed_id_vec = decode_hex(BTC_BYTES_32_HEX_STR).unwrap();
+    let data_feed_id: [u8; 32] = data_feed_id_vec.try_into().unwrap();
 
     // Required min number of unique signers for the requested data feed
-    let unique_signers_threshold = 2;
+    let unique_signers_threshold = 1;
 
     // Vector, containing public keys of trusted signers
     // Trusted public keys can be found here: https://github.com/redstone-finance/redstone-oracles-monorepo/blob/main/packages/oracles-smartweave-contracts/src/contracts/redstone-oracle-registry/initial-state.json
     let authorised_signers: Vec<[u8; 64]> =
-      vec![get_pub_key(SIGNER_1_PUB_KEY), get_pub_key(SIGNER_2_PUB_KEY)];
+      vec![get_pub_key(REDSTONE_MAIN_DEMO_SIGNER_PUB_KEY_HEX)];
 
-    let current_timestamp_milliseconds = env::block_timestamp() / 1_000_000;
+    let current_timestamp_milliseconds = u128::from(near_sdk::env::block_timestamp() / 1_000_000);
 
     // Signer oracle data, efficiently serialized to bytes
-    let redstone_payload = decode_hex(&redstone_payload_str).unwrap();
+    let redstone_payload = decode_hex(&redstone_payload).unwrap();
 
     // `get_oracle_value` function will:
     // - parse redstone payload,
@@ -109,7 +121,7 @@ const redstoneDataGateways = [
 const redstonePayloadHex = await redstoneSDK.requestRedstonePayload(
   {
     dataServiceId: "redstone-main-demo",
-    uniqueSignersCount: 2,
+    uniqueSignersCount: 1,
     dataFeeds: ["BTC"],
   },
   redstoneDataGateways
@@ -135,7 +147,7 @@ const outcome = await wallet.signAndSendTransaction({
 
 ## 🔥 Examples
 
-You can check out a simple example NEAR dApp powered by RedStone oracles [here.](https://github.com/redstone-finance/synths-on-near)
+You can check out a simple example NEAR dApp in RUST powered by RedStone oracles [here.](https://github.com/redstone-finance/redstone-near-dapp-example-rust)
 
 ## 👩🏻‍💻 Development and contributions
 
