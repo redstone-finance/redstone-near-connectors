@@ -32,6 +32,9 @@ In simple terms, NEAR is **blockchain for everyone**.
 
 To learn more about the NEAR blockchain checkout out the [official NEAR documentation.](https://docs.near.org/)
 
+![redstone-near-meme](https://user-images.githubusercontent.com/48165439/203373818-5c6e89cf-7417-48a4-a6dd-3d9bb1c23382.png)
+
+
 ## 🚀 Getting started
 
 - [Integrate RedStone Oracles with NEAR contracts in **RUST**](./rust/)
